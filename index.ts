@@ -6,14 +6,11 @@ import * as p from "path";
 const server = http.createServer();
 // relative 表示拼接两个路径， __dirname: 表示当前文件绝对路径
 const publicDir = p.resolve(__dirname, 'public')
-console.log('publicDir')
-console.log(publicDir)
 
 // 每次请求，都会触发箭头函数
 server.on('request', (request: IncomingMessage, response: ServerResponse) => {
   const { method, url, headers } = request
-  console.log('# url')
-  console.log(url)
+  
   switch(url) {
     case '/index.html':
       fs.readFile(p.resolve(publicDir, 'index.html'), (error, data)=>{
