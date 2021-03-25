@@ -1,5 +1,11 @@
 # Node.js HTTP 模块案例
 
+初始化
+
+```sh
+yarn install
+```
+
 运行
 
 ```sh
