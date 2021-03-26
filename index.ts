@@ -8,13 +8,20 @@ import { URL } from "url"
 const server = http.createServer();
 // relative 表示拼接两个路径， __dirname: 表示当前文件绝对路径
 const publicDir = p.resolve(__dirname, 'public');
-
+let cacheAge = 3600 * 24 * 100;
 // 每次请求，都会触发箭头函数
 server.on('request', (request: IncomingMessage, response: ServerResponse) => {
   const {method, url: path, headers} = request;
   // const myURL = new URL(path)
   // console.log(myURL.hash)
   const {pathname, search} = url.parse(path); // 获取不带查询参数的路径，及查询参数
+
+  if (method !== 'GET') {
+    response.statusCode = 405
+    response.end('这是一个假响应')
+    return;
+  }
+
   let filename = pathname.substr(1);
   // response.setHeader('Content-Type', 'text/css; charset=utf-8');
   if (filename === '') {
@@ -37,6 +44,7 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
         response.end('服务器烦啊，请稍后再试');
       }
     } else {
+      response.setHeader('Cache-Control', `public, max-age=${cacheAge}`)
       response.end(data);
     }
   });
