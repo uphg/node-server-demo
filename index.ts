@@ -37,7 +37,7 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
         response.end('没有权限访问该目录');
       } else {
         response.statusCode = 500;
-        response.end('服务器烦啊，请稍后再试');
+        response.end('服务器繁忙，请稍后再试');
       }
     } else {
       response.setHeader('Cache-Control', `public, max-age=${cacheAge}`);
